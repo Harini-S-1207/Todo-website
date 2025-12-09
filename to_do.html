@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To Do List</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      display: flex;
+      height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 60px;
+      background: #e2e2e2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px 0;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    }
+    .icon {
+      width: 30px;
+      height: 30px;
+      background: white;
+      border-radius: 5px;
+      margin: 10px 0;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    /* Main section */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Title bar */
+    .titlebar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: white;
+      padding: 10px 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .titlebar h1 {
+      font-size: 20px;
+      margin: 0;
+    }
+    .close-btn {
+      color: red;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* Input */
+    .input-section {
+      padding: 15px;
+      display: flex;
+      gap: 10px;
+    }
+    .input-section input {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .input-section button {
+      background: #007bff;
+      color: white;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    /* Task sections */
+    .content {
+      flex: 1;
+      display: flex;
+      padding: 15px;
+      gap: 15px;
+    }
+    .tasks, .completed {
+      flex: 1;
+      background: white;
+      border-radius: 12px;
+      padding: 15px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    h2 {
+      margin-top: 0;
+      font-size: 18px;
+    }
+    .task {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .task button {
+      background: none;
+      border: none;
+      color: green;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    /* Bottom bar */
+    .bottombar {
+      background: #ddd;
+      display: flex;
+      justify-content: space-around;
+      padding: 8px 0;
+    }
+    .bottombar .icon {
+      width: 25px;
+      height: 25px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="icon"></div>
+    <div class="icon"></div>
+    <div class="icon"></div>
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+    <!-- Titlebar -->
+    <div class="titlebar">
+      <h1>To Do List</h1>
+      <div class="close-btn">X</div>
+    </div>
+
+    <!-- Input -->
+    <div class="input-section">
+      <input id="taskInput" type="text" placeholder="Enter new task...">
+      <button onclick="addTask()">Create +</button>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+      <!-- To Complete -->
+      <div class="tasks">
+        <h2>To Complete</h2>
+        <div id="tasksList"></div>
+      </div>
+
+      <!-- Completed -->
+      <div class="completed">
+        <h2>Completed</h2>
+        <div id="completedList"></div>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="bottombar">
+      <div class="icon"></div>
+      <div class="icon"></div>
+      <div class="icon"></div>
+    </div>
+  </div>
+
+  <script>
+    function addTask() {
+      const input = document.getElementById("taskInput");
+      const taskText = input.value.trim();
+      if (taskText === "") return;
+
+      const taskDiv = document.createElement("div");
+      taskDiv.className = "task";
+      taskDiv.innerHTML = `<span>${taskText}</span> <button onclick="completeTask(this)">✓</button>`;
+      document.getElementById("tasksList").appendChild(taskDiv);
+
+      input.value = "";
+    }
+
+    function completeTask(button) {
+      const taskDiv = button.parentElement;
+      const taskText = taskDiv.querySelector("span").textContent;
+
+      const completedDiv = document.createElement("div");
+      completedDiv.className = "task";
+      completedDiv.innerHTML = `<span>${taskText}</span> <span>✔</span>`;
+      document.getElementById("completedList").appendChild(completedDiv);
+
+      taskDiv.remove();
+    }
+  </script>
+</body>
+</html>
